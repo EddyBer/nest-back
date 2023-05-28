@@ -1,13 +1,35 @@
 import { Column, Model, Table } from 'sequelize-typescript';
 
 @Table({paranoid:true})
-export class User extends Model {
-  @Column
-  firstName: string;
+export class USERS extends Model {
 
-  @Column
-  lastName: string;
+  @Column({primaryKey: true, allowNull: false, autoIncrement: true})
+  id : number
 
-  @Column({ defaultValue: true })
-  isActive: boolean;
+  @Column({allowNull: false})
+  name: string;
+
+  @Column({allowNull: false})
+  firstname: string;
+
+  @Column({allowNull: false})
+  birthdate:Date;
+
+  @Column({allowNull: false})
+  adress:string;
+
+  @Column({allowNull: false})
+  email:string;
+
+  @Column({allowNull: false})
+  phone:string;
+
+  @Column({allowNull: false})
+  AT:number;
+
+  @Column({allowNull: false})
+  chargesRate:number;
+
+  @Column({allowNull: false})
+  password:string;
 }

@@ -1,19 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from './user.model';
+import { USERS } from './user.model';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User)
-    private userModel: typeof User,
+    @InjectModel(USERS)
+    private userModel: typeof USERS,
   ) {}
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<USERS[]> {
     return this.userModel.findAll();
   }
 
-  findOne(id: string): Promise<User> {
+  findOneByMail(id: string): Promise<USERS> {
     return this.userModel.findOne({
       where: {
         id,
@@ -21,8 +21,39 @@ export class UsersService {
     });
   }
 
-  async remove(id: string): Promise<void> {
-    const user = await this.findOne(id);
-    await user.destroy();
+  async createUser(data:USERS):Promise<USERS> {
+
+    const user = await this.findByEmail(data.email);
+
+    if (user) {
+      const errors = [];
+      if (user.email === data.email) {
+        errors.push({
+          param: 'email',
+          msg: 'The email is already used',
+        });
+      }
+
+      throw new BadRequestException(errors);
+    }
+    
+    return await this.userModel.create({
+      name: data.name,
+      firstname: data.firstname,
+      birthdate: data.birthdate,
+      adress: data.adress,
+      email: data.email,
+      phone: data.phone,
+      AT: data.AT,
+      chargesRate: data.chargesRate,
+      password: data.password,
+    })
   }
+
+  async findByEmail(
+    mail:string,
+  ): Promise<USERS> {
+    return this.userModel.findOne({ where: { email: mail } });
+  }
+
 }
