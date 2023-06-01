@@ -1,4 +1,5 @@
 import { Column, Model, Table } from 'sequelize-typescript';
+import * as bcrypt from 'bcrypt';
 
 @Table({paranoid:true})
 export class USERS extends Model {
@@ -30,6 +31,11 @@ export class USERS extends Model {
   @Column({allowNull: false})
   chargesRate:number;
 
-  @Column({allowNull: false})
+  @Column({allowNull: false,
+          set(value:string) {
+            const hash = bcrypt.hashSync(value, 10);
+            this.setDataValue('password', hash);
+          }})
   password:string;
+
 }

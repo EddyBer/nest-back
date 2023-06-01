@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { USERS } from './user.model';
+import bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -13,10 +14,10 @@ export class UsersService {
     return this.userModel.findAll();
   }
 
-  findOneByMail(id: string): Promise<USERS> {
+  findOneByMail(email: string): Promise<USERS> {
     return this.userModel.findOne({
       where: {
-        id,
+        email,
       },
     });
   }
