@@ -74,8 +74,33 @@ export class AuthService {
     return result
   }
 
+  // async refreshToken(
+  //   refreshTokenAuthDto: RefreshTokenAuthDto,
+  // ): Promise<RefreshTokenAuthResult> {
+  //   try {
+  //     const payload = this.jwtService.verify(refreshTokenAuthDto.refreshToken);
+
+  //     if (payload.type !== 'refresh') {
+  //       throw new UnauthorizedException('Authentication failed');
+  //     }
+
+  //     const user = await this.userService.findById(payload.id);
+
+  //     const expectedKey = this.generateKey(user);
+  //     if (expectedKey !== payload.key) {
+  //       throw new UnauthorizedException('Authentication failed');
+  //     }
+
+  //     user.lastRefreshTokenRequest = new Date();
+  //     await user.save();
+
+  //     return new RefreshTokenAuthResult(this.generateAccessToken(user));
+  //   } catch (error) {
+  //     throw new UnauthorizedException();
+  //   }
+  // }
+
   async isAccessTokenValid(): Promise<boolean> {
-    const bleg =true
     return true;
   }
 }

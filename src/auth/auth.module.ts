@@ -3,13 +3,16 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from 'src/modules/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt.strategy';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [UsersModule,
             JwtModule.register({
-                secret:"A better solution could be retrieving the existing"
-            })],
-  providers: [AuthService],
+                secret:"FUEHFZEF HZOEUHFOZE UFHEZOUHFO ZEHFO"
+            }),
+            PassportModule,],
+  providers: [AuthService,JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
