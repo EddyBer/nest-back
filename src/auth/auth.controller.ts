@@ -6,14 +6,14 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async connect( @Body() data : {}): Promise<string> {
+  async connect( @Body() data : {}): Promise<{}> {
     return this.authService.login(data);
   }
 
-//   @HttpCode(200)
-//   @UseGuards(JwtAuthGuard)
-//   @Post('isAccessTokenValid')
-//   async isAccessTokenValid() {
-//     return this.authService.isAccessTokenValid();
-//   }
+  // @HttpCode(200)
+  // @UseGuards(JwtAuthGuard)
+  // @Post('isAccessTokenValid')
+  // async isAccessTokenValid() {
+  //   return this.authService.isAccessTokenValid();
+  // }
 }

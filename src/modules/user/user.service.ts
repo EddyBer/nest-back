@@ -14,12 +14,20 @@ export class UsersService {
     return this.userModel.findAll();
   }
 
-  findOneByMail(email: string): Promise<USERS> {
+  async findOneByMail(email: string): Promise<USERS> {
     return this.userModel.findOne({
       where: {
         email,
       },
     });
+  }
+
+  async getUserById(id : number): Promise<USERS> {
+    return this.userModel.findOne({
+      where: {
+        id,
+      },
+    })
   }
 
   async createUser(data:USERS):Promise<USERS> {

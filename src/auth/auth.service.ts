@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 import { UsersService } from 'src/modules/user/user.service';
 import { USERS } from 'src/modules/user/user.model';
 
@@ -21,7 +22,27 @@ export class AuthService {
     );
   }
 
-  async login(data): Promise<string> {
+  private generateRefreshToken(user: USERS) {
+    const type = 'refresh';
+    const { id } = user;
+    const key = this.generateKey(user);
+
+    return this.jwtService.sign({ type, id: id, key });
+  }
+
+  private generateKey(user: USERS) {
+    const { password, id: id } = user;
+    return crypto
+      .createHmac(
+        'sha256',
+        'FUEHFZEF HZOEUHFOZE UFHEZOUHFO ZEHFO',
+      )
+      .update(id + password)
+      .digest('hex');
+  }
+
+
+  async login(data): Promise<{}> {
 
     if (!data.email || !data.password) {
       throw new UnauthorizedException('Authentication failed');
@@ -31,19 +52,30 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Authentication failed');
     }
-    console.log(user.dataValues.password)
-    console.log(data.password)
+
     const passwordMatch = await bcrypt.compare(
       data.password,
       user.dataValues.password,
     );
-    console.log('result :' + passwordMatch)
+
     if (!passwordMatch) {
       throw new UnauthorizedException('Authentication failed');
     }
 
     const token = this.generateAccessToken(user);
+    const refreshToken = this.generateRefreshToken(user);
 
-    return token
+    const result = {
+      accessToken : token,
+      refreshToken : refreshToken,
+      userId: user.id
+    }
+
+    return result
+  }
+
+  async isAccessTokenValid(): Promise<boolean> {
+    const bleg =true
+    return true;
   }
 }
