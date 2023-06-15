@@ -1,5 +1,6 @@
 import { Column, Model, Table } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
+import { CLIENTS } from '../clients/clients.model';
 
 @Table({paranoid:true})
 export class USERS extends Model {

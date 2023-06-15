@@ -1,4 +1,4 @@
-import { Controller, Get, Post,Body, Param, UseGuards,} from '@nestjs/common';
+import { Controller, Get, Post,Body, Param, UseGuards,Put} from '@nestjs/common';
 import { UsersService } from './user.service';
 import { USERS } from './user.model';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
@@ -16,5 +16,11 @@ export class UsersController {
   @Get(':id')
   async getUserById(@Param() data:{id}): Promise<USERS> {
     return (await this.usersService.getUserById(data.id));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  async updateUser(@Param() id:{id}, @Body() data:USERS): Promise<[affectedCount: number]> {
+    return (await this.usersService.updateUser(id.id, data));
   }
 }

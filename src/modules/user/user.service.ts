@@ -65,4 +65,19 @@ export class UsersService {
     return this.userModel.findOne({ where: { email: mail } });
   }
 
+  async updateUser (id:number, data:USERS):Promise<[affectedCount: number]>{
+    return this.userModel.update({
+      name:data.name,
+      firstname:data.firstname,
+      birthdate:data.birthdate,
+      adress:data.adress,
+      email:data.email,
+      phone:data.phone,
+      AT:data.AT,
+      chargesRatez:data.chargesRate,
+    },
+    {
+      where: {id:id}
+    })
+  }
 }
