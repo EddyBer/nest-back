@@ -66,6 +66,20 @@ export class UsersService {
   }
 
   async updateUser (id:number, data:USERS):Promise<[affectedCount: number]>{
+
+    const user = await this.findByEmail(data.email);
+
+    if (user && user.id != id) {
+      const errors = [];
+      if (user.email === data.email) {
+        errors.push({
+          param: 'email',
+          msg: 'The email is already used',
+        });
+      }
+      throw new BadRequestException(errors);
+    }
+    
     return this.userModel.update({
       name:data.name,
       firstname:data.firstname,
