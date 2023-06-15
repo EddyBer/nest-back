@@ -1,4 +1,4 @@
-import { Controller, Get, Post,Body, Param, UseGuards,} from '@nestjs/common';
+import { Controller, Get, Post,Body, Param, UseGuards, Delete, Put,} from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { PROJECTS } from './projects.model';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
@@ -12,4 +12,30 @@ export class ProjectsController {
   async getProjects(): Promise<PROJECTS[]> {
     return (await this.projectsService.getProjects());
   }
+
+  
+  @UseGuards(JwtAuthGuard)
+  @Get(':clientsId')
+  async getProjectsByClient(@Param() data:{clientsId}): Promise<PROJECTS[]> {
+    return (await this.projectsService.getProjectsByClient(data.clientsId));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  async createProject(@Body() data :PROJECTS):Promise<PROJECTS>{
+    return await this.projectsService.createProjects(data)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':projectId')
+  async deleteProjects(@Param() data:{projectId}):Promise<number> {
+    return await this.projectsService.deleteProjects(data.projectId)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':projectId')
+  async upateProject(@Param()id :{projectId}, @Body() data :PROJECTS):Promise<[affectedCount: number]> {
+    return await this.projectsService.updateProject(id.projectId,data)
+  }
+
 }
