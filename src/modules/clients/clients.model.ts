@@ -10,10 +10,10 @@ export class CLIENTS extends Model {
   @Column({allowNull: false})
   name: string;
 
-  @Column({allowNull: false})
+  @Column({allowNull: true})
   Contactname: string;
 
-  @Column({allowNull: false})
+  @Column({allowNull: true})
   firstname: string;
 
   @Column({allowNull: false})
