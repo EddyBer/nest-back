@@ -20,7 +20,8 @@ export class USERS extends Model {
   @Column({allowNull: false})
   adress:string;
 
-  @Column({allowNull: false})
+  @Column({allowNull: false,
+  unique:true})
   email:string;
 
   @Column({allowNull: false})

@@ -28,7 +28,8 @@ export class CLIENTS extends Model {
   @Column({allowNull: false})
   type:number;
 
-  @Column({allowNull: false})
+  @Column({allowNull: false,
+  unique:true})
   SIRET:string;
 
   @ForeignKey(() => USERS)

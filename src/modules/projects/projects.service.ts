@@ -9,8 +9,12 @@ export class ProjectsService {
     private projectsModel: typeof PROJECTS,
   ) {}
 
-  async getProjects(): Promise<PROJECTS[]> {
-    return this.projectsModel.findAll();
+  async getMyProjects(userId:number): Promise<PROJECTS[]> {
+    return this.projectsModel.findAll({
+      where:{
+        userId:userId
+      }
+    });
   }
 
   async getProjectsByClient(id:number):Promise<PROJECTS[]> {
@@ -25,7 +29,8 @@ export class ProjectsService {
     return this.projectsModel.create({
       name:data.name,
       status:data.status,
-      clientId:data.clientId
+      clientId:data.clientId,
+      userId:data.userId
     })
   }
 

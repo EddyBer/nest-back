@@ -18,6 +18,21 @@ export class ClientsService {
   }
 
   async creteClient(data:CLIENTS): Promise<CLIENTS> {
+
+    const client = await this.findBySIRET(data.SIRET);
+
+    if (client) {
+      const errors = [];
+      if (client.SIRET === data.SIRET) {
+        errors.push({
+          param: 'SIRET',
+          msg: 'This SIRET is already used',
+        });
+      }
+
+      throw new BadRequestException(errors);
+    }
+    
     return this.clientsModel.create({
       name:data.name,
       Contactname:data.Contactname,
@@ -54,5 +69,11 @@ export class ClientsService {
     {
       where: {id:id}
     })
+  }
+  
+  async findBySIRET(
+    SIRET:string,
+  ): Promise<CLIENTS> {
+    return this.clientsModel.findOne({ where: { SIRET: SIRET } });
   }
 }

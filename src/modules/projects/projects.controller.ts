@@ -8,12 +8,11 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get()
-  async getProjects(): Promise<PROJECTS[]> {
-    return (await this.projectsService.getProjects());
+  @Get(':userId')
+  async getMyProjects(@Param() data:{userId}): Promise<PROJECTS[]> {
+    return (await this.projectsService.getMyProjects(data.userId));
   }
 
-  
   @UseGuards(JwtAuthGuard)
   @Get(':clientsId')
   async getProjectsByClient(@Param() data:{clientsId}): Promise<PROJECTS[]> {

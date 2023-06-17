@@ -1,5 +1,6 @@
 import { BelongsTo, Column, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { CLIENTS } from '../clients/clients.model';
+import { USERS } from '../user/user.model';
 
 @Table({paranoid:true})
 export class PROJECTS extends Model {
@@ -20,6 +21,9 @@ export class PROJECTS extends Model {
   @BelongsTo(() => CLIENTS)
   user:CLIENTS
 
+  @ForeignKey(() => USERS)
+  @Column({allowNull: false})
+  userId:number;
 }
 
 // PROJECTS.hasOne(CLIENTS)

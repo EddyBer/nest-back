@@ -31,7 +31,6 @@ export class UsersService {
   }
 
   async createUser(data:USERS):Promise<USERS> {
-
     const user = await this.findByEmail(data.email);
 
     if (user) {
