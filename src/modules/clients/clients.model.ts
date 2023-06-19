@@ -1,5 +1,6 @@
-import { BelongsTo, Column, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, ForeignKey, HasOne, Model, PrimaryKey, Table, BelongsToMany, HasMany } from 'sequelize-typescript';
 import { USERS } from '../user/user.model';
+import { PROJECTS } from '../projects/projects.model';
 
 @Table({paranoid:true})
 export class CLIENTS extends Model {
@@ -28,14 +29,17 @@ export class CLIENTS extends Model {
   @Column({allowNull: false})
   type:number;
 
-  @Column({allowNull: false,
-  unique:true})
+  @Column({allowNull: false})
   SIRET:string;
 
   @ForeignKey(() => USERS)
   @Column({allowNull: false})
   userId:number;
 
-  @BelongsTo(() => USERS)
+  @BelongsTo(() => USERS, 'id')
   user:USERS
+
+  @HasMany(() => PROJECTS, 'clientId')
+  projects:PROJECTS[]
+
 }

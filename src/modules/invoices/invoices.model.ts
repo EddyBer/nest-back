@@ -1,5 +1,6 @@
 import { BelongsTo, Column, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
 import { PROJECTS } from '../projects/projects.model';
+import { USERS } from '../user/user.model';
 
 @Table({paranoid:true})
 export class INVOICES extends Model {
@@ -29,6 +30,11 @@ export class INVOICES extends Model {
   @Column({allowNull: false})
   projectId:number;
 
-  @BelongsTo(() => PROJECTS)
+  @BelongsTo(() => PROJECTS, 'projectId')
   project:PROJECTS
+
+  @ForeignKey(() => USERS)
+  @Column({allowNull: false})
+  userId:number;
+
 }

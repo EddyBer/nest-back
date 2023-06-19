@@ -1,7 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { USERS } from './user.model';
-import bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -32,30 +31,81 @@ export class UsersService {
 
   async createUser(data:USERS):Promise<USERS> {
     const user = await this.findByEmail(data.email);
+    const errors = [];
 
     if (user) {
-      const errors = [];
       if (user.email === data.email) {
         errors.push({
           param: 'email',
           msg: 'The email is already used',
         });
       }
+    }
 
+    if (data.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/) ==  null) {
+      errors.push({
+        param: 'password',
+        msg: 'The password does not match the rules (10 carac, 1 uppercase, 1 number, 1 special car)',
+      });
+    }
+
+    if (data.name.trim() == '') {
+      errors.push({
+        param: 'name',
+        msg: 'Name can\'t be empty ',
+      });
+    }
+
+    if (data.firstname.trim() == '') {
+      errors.push({
+        param: 'firstname',
+        msg: 'Firstname can\'t be empty ',
+      });
+    }
+
+    if (data.adress.trim() == '') {
+      errors.push({
+        param: 'adress',
+        msg: 'Address can\'t be empty ',
+      });
+    }
+
+    if (data.phone.trim() == '') {
+      errors.push({
+        param: 'phone',
+        msg: 'Phone number can\'t be empty ',
+      });
+    }
+
+    if (data.email.trim() == '') {
+      errors.push({
+        param: 'email',
+        msg: 'Email can\'t be empty ',
+      });
+    }
+
+    if (!isNaN(data.birthdate.valueOf())) {
+      errors.push({
+        param: 'birthdate',
+        msg: 'Birthdate can\'t be empty ',
+      });
+    }
+
+    if (errors.length == 0) {
+      return await this.userModel.create({
+        name: data.name,
+        firstname: data.firstname,
+        birthdate: data.birthdate,
+        adress: data.adress,
+        email: data.email,
+        phone: data.phone,
+        AT: data.AT,
+        chargesRate: data.chargesRate,
+        password: data.password,
+      })
+    } else {
       throw new BadRequestException(errors);
     }
-    
-    return await this.userModel.create({
-      name: data.name,
-      firstname: data.firstname,
-      birthdate: data.birthdate,
-      adress: data.adress,
-      email: data.email,
-      phone: data.phone,
-      AT: data.AT,
-      chargesRate: data.chargesRate,
-      password: data.password,
-    })
   }
 
   async findByEmail(

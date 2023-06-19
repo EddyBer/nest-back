@@ -23,4 +23,9 @@ export class UsersController {
   async updateUser(@Param() id:{id}, @Body() data:USERS): Promise<[affectedCount: number]> {
     return (await this.usersService.updateUser(id.id, data));
   }
+
+  @Get()
+  async getAllUsers():Promise<USERS[]> {
+    return (await this.usersService.findAll())
+  }
 }

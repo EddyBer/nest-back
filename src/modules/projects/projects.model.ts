@@ -18,12 +18,13 @@ export class PROJECTS extends Model {
   @Column({allowNull: false})
   clientId:number;
 
-  @BelongsTo(() => CLIENTS)
-  user:CLIENTS
+  @BelongsTo(() => CLIENTS, 'clientId')
+  client:CLIENTS
 
   @ForeignKey(() => USERS)
   @Column({allowNull: false})
   userId:number;
+
 }
 
 // PROJECTS.hasOne(CLIENTS)
