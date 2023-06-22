@@ -124,7 +124,7 @@ export class ClientsService {
     if (errors.length == 0 && !hasProjects) {
       return this.clientsModel.destroy({
         where:{
-          id:321
+          id:clientId
         }
       })
     } else {
