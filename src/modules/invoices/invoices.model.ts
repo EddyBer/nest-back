@@ -20,7 +20,7 @@ export class INVOICES extends Model {
   @Column({allowNull: false})
   paymentDeadline:Date;
 
-  @Column({allowNull: false})
+  @Column({allowNull: true})
   paymentDate:Date;
 
   @Column({})
@@ -36,5 +36,8 @@ export class INVOICES extends Model {
   @ForeignKey(() => USERS)
   @Column({allowNull: false})
   userId:number;
+
+  @BelongsTo(() => USERS, 'userId')
+  user:USERS
 
 }

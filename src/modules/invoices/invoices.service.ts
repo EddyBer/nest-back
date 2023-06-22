@@ -18,7 +18,8 @@ export class InvoicesService {
         paymentDeadline : data.paymentDeadline,
         paymentDate : data.paymentDate,
         note : data.note,
-        projectId : data.projectId
+        projectId : data.projectId,
+        userId : data.userId
     })
   }
 
@@ -28,6 +29,10 @@ export class InvoicesService {
             id:InvoiceId
         }
     })
+  }
+
+  async getLast():Promise<INVOICES> {
+    return this.invoicesModel.max('id',{})
   }
 
   async getAllInvoices():Promise<INVOICES[]> {
