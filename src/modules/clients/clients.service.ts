@@ -133,6 +133,76 @@ export class ClientsService {
   }
 
   async updateClient(id:number,data:CLIENTS): Promise<[affectedCount: number]> {
+
+    const errors = [];
+    
+    if (data.name.trim() == '') {
+      errors.push({
+        param: 'name',
+        msg: 'Name can\'t be empty ',
+      });
+    }
+
+    if (data.type == 1) {
+      if (data.firstname == undefined) {
+        errors.push({
+          param: 'firstname',
+          msg: 'Firstname can\'t be undefined',
+        });
+      } else {
+        if (data.firstname.trim() == '') {
+          errors.push({
+            param: 'firstname',
+            msg: 'Firstname can\'t be empty if you choose type private',
+          });
+            }
+      }
+    }
+
+    if (data.type == 2) {
+      if(data.Contactname == undefined) {
+        errors.push({
+          param: 'Contactname',
+          msg: 'Contactname can\'t be undefined',
+        });
+      } else {
+        if (data.Contactname.trim() == '') {
+        errors.push({
+          param: 'Contactname',
+          msg: 'Contactname can\'t be empty if you choose type company',
+        });
+          }
+        }
+      }
+
+      if (data.adress.trim() == '') {
+        errors.push({
+          param: 'address',
+          msg: 'Address can\'t be empty ',
+        });
+      }
+  
+      if (data.phone.trim() == '') {
+        errors.push({
+          param: 'phone',
+          msg: 'Phone number can\'t be empty ',
+        });
+      }
+
+      if (data.email.trim() == '') {
+        errors.push({
+          param: 'email',
+          msg: 'Email can\'t be empty ',
+        });
+      }
+
+      if (data.SIRET.trim() == '') {
+        errors.push({
+          param: 'SIRET',
+          msg: 'SIRET can\'t be empty ',
+        });
+      }
+
     return this.clientsModel.update({
       name:data.name,
       Contactname:data.Contactname,

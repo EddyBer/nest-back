@@ -27,6 +27,12 @@ export class InvoicesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get(':userId')
+  async getMyInvoices(@Param() data :{userId}): Promise<INVOICES[]> {
+    return (await this.invoicesService.getMyInvoices(data.userId));
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':projectsId')
   async getInvoiceByProjects(@Param() data :{projectsId}): Promise<INVOICES[]> {
     return (await this.invoicesService.getAllInvoicesByProject(data.projectsId));

@@ -15,13 +15,12 @@ export class PROJECTS extends Model {
   status: string;
 
   @ForeignKey(() => CLIENTS)
-  @Column({allowNull: false})
+  @Column
   clientId:number;
 
-  @BelongsTo(() => CLIENTS, 'clientId')
+  @BelongsTo(() => CLIENTS)
   client:CLIENTS
 
-  @ForeignKey(() => USERS)
   @Column({allowNull: false})
   userId:number;
 

@@ -1,4 +1,4 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Model, Table, HasMany } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 import { CLIENTS } from '../clients/clients.model';
 
@@ -39,5 +39,8 @@ export class USERS extends Model {
             this.setDataValue('password', hash);
           }})
   password:string;
+
+  @HasMany(() => CLIENTS)
+  clients:CLIENTS[]
 
 }

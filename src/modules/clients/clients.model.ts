@@ -33,13 +33,13 @@ export class CLIENTS extends Model {
   SIRET:string;
 
   @ForeignKey(() => USERS)
-  @Column({allowNull: false})
+  @Column
   userId:number;
 
-  @BelongsTo(() => USERS, 'id')
+  @BelongsTo(() => USERS)
   user:USERS
 
-  @HasMany(() => PROJECTS, 'clientId')
+  @HasMany(() => PROJECTS)
   projects:PROJECTS[]
 
 }

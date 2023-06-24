@@ -23,6 +23,14 @@ export class InvoicesService {
     })
   }
 
+  async getMyInvoices(userId: number):Promise<INVOICES[]> {
+    return this.invoicesModel.findAll({
+      where:{
+        userId: userId
+    }
+    })
+  }
+
   async deleteInvoice(InvoiceId: number):Promise<number> {
     return this.invoicesModel.destroy({
         where:{
