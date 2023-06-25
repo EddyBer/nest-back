@@ -1,4 +1,4 @@
-import { BelongsTo, Column, ForeignKey, HasOne, Model, PrimaryKey, Table, BelongsToMany, HasMany } from 'sequelize-typescript';
+import { BelongsTo, Column, ForeignKey, HasOne, Model, PrimaryKey, Table, BelongsToMany, HasMany, Default } from 'sequelize-typescript';
 import { USERS } from '../user/user.model';
 import { PROJECTS } from '../projects/projects.model';
 

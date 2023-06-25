@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { INVOICES } from './invoices.model';
 import { identity } from 'rxjs';
+import { PROJECTS } from '../projects/projects.model';
 
 @Injectable()
 export class InvoicesService {
@@ -27,7 +28,8 @@ export class InvoicesService {
     return this.invoicesModel.findAll({
       where:{
         userId: userId
-    }
+      },
+      include : [PROJECTS]
     })
   }
 

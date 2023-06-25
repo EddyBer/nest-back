@@ -19,7 +19,6 @@ export class InvoicesController {
     return await this.invoicesService.deleteInvoice(data.invoiceId)
   }
 
-  
   @UseGuards(JwtAuthGuard)
   @Get()
   async getAllInvoice(): Promise<INVOICES[]> {

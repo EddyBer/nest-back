@@ -10,4 +10,4 @@ import { LinesService } from './lines.service';
   controllers: [LinesController],
   exports: [LinesService],
 })
-export class ClientsModule {}
+export class LinesModule {}

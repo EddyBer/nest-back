@@ -11,6 +11,8 @@ import {AuthModule} from  './auth/auth.module';
 import { CLIENTS } from './modules/clients/clients.model';
 import { PROJECTS } from './modules/projects/projects.model';
 import { INVOICES } from './modules/invoices/invoices.model';
+import { LINES } from './modules/invoices/invoicesLines/lines.model';
+import { LinesModule } from './modules/invoices/invoicesLines/lines.module';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { INVOICES } from './modules/invoices/invoices.model';
       username: 'admin',
       password: 'admin',
       database: 'mydb',
-      models: [USERS,CLIENTS,PROJECTS, INVOICES],
+      models: [USERS,CLIENTS,PROJECTS, INVOICES, LINES],
       autoLoadModels: true,
       synchronize: true,
     }),
@@ -29,6 +31,7 @@ import { INVOICES } from './modules/invoices/invoices.model';
     ProjectsModule,
     ClientsModule,
     InvoicesModule,
+    LinesModule,
     AuthModule,
   ],
   controllers: [AppController],
