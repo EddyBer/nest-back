@@ -25,4 +25,13 @@ export class LinesService {
       }
     })
   }
+
+  async deleteInvoiceLine(LineId: number):Promise<number> {
+    return this.linesModel.destroy({
+        where:{
+            id:LineId
+        }
+    })
+  }
+
 }

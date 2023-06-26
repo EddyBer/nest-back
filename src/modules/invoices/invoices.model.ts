@@ -1,6 +1,7 @@
-import { BelongsTo, Column, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, ForeignKey, HasMany, HasOne, Model, Table } from 'sequelize-typescript';
 import { PROJECTS } from '../projects/projects.model';
 import { USERS } from '../user/user.model';
+import { LINES } from './invoicesLines/lines.model';
 
 @Table({paranoid:true})
 export class INVOICES extends Model {
@@ -39,5 +40,10 @@ export class INVOICES extends Model {
 
   @BelongsTo(() => USERS, 'userId')
   user:USERS
+
+  @HasMany(() => LINES, {
+    onDelete : 'CASCADE'
+  })
+  lines:LINES[]
 
 }

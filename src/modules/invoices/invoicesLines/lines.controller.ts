@@ -18,4 +18,11 @@ export class LinesController {
   async getLines(@Param() data :{invoicesId}): Promise<LINES[]> {
     return (await this.linesService.getLines(data.invoicesId))
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':lineId')
+  async deleteClient(@Param() data :{lineId}):Promise<number>{
+    return await this.linesService.deleteInvoiceLine(data.lineId)
+  }
+
 }
