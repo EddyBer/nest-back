@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { INVOICES } from './invoices.model';
 import { identity } from 'rxjs';
 import { PROJECTS } from '../projects/projects.model';
+import { LINES } from './invoicesLines/lines.model';
 
 @Injectable()
 export class InvoicesService {
@@ -29,7 +30,7 @@ export class InvoicesService {
       where:{
         userId: userId
       },
-      include : [PROJECTS]
+      include : [PROJECTS, LINES]
     })
   }
 
@@ -46,7 +47,9 @@ export class InvoicesService {
   }
 
   async getAllInvoices():Promise<INVOICES[]> {
-    return this.invoicesModel.findAll()
+    return this.invoicesModel.findAll(
+
+    )
   }
 
   async getAllInvoicesByProject(id:number):Promise<INVOICES[]> {
